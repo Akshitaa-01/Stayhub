@@ -6,6 +6,8 @@ const path=require("path");
 
 app.set("views", path.join(__dirname,"views"));
 app.set("view engine","ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 let port=8080;
 
@@ -31,6 +33,19 @@ app.get("/listings",async (req,res)=>{
   const allListings= await Listing.find();
   res.render("./listings/home.ejs",{allListings});
 });
+
+app.post("/listings", async (req,res)=>{
+  const listing=req.body.listing;
+  let listing1= await Listing.insertOne(listing);
+  listing1.save();
+  res.redirect("./listings");
+});
+
+app.get("/listings/new",(req,res)=>{
+  res.render("./listings/new.ejs");
+});
+
+
 
 app.get("/listings/:id", async (req,res)=>{
   let Id=req.params.id;
