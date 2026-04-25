@@ -1,88 +1,84 @@
-const express=require("express");
-const app=express();
-const mongoose=require("mongoose");
-const Listing=require("./models/listing.js");
-const path=require("path");
-const methodOverride = require('method-override');
-const ejsMate = require('ejs-mate');
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const Listing = require("./models/listing.js");
+const path = require("path");
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
-app.set("views", path.join(__dirname,"views"));
-app.set("view engine","ejs");
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-app.engine('ejs', ejsMate);
+app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
 
-let port=8080;
+let port = 8080;
 
 main()
- .then((res)=>{
+  .then((res) => {
     console.log("db connection established");
- })
- .catch(err => console.log(err));
+  })
+  .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/stayhub');
+  await mongoose.connect("mongodb://127.0.0.1:27017/stayhub");
 }
 
-app.listen(port,()=>{
-    console.log("server is working");
+app.listen(port, () => {
+  console.log("server is working");
 });
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
   res.send("root is working ");
 });
 
 //home route
-app.get("/listings",async (req,res)=>{
-  const allListings= await Listing.find();
-  res.render("./listings/home.ejs",{allListings});
+app.get("/listings", async (req, res) => {
+  const allListings = await Listing.find();
+  res.render("./listings/home.ejs", { allListings });
 });
 
 //create route
-app.post("/listings", async (req,res)=>{
-  const listing=req.body.listing;
-  let listing1= await Listing.insertOne(listing);
+app.post("/listings", async (req, res) => {
+  const listing = req.body.listing;
+  let listing1 = await Listing.insertOne(listing);
   listing1.save();
   res.redirect("./listings");
 });
 
 //new route
-app.get("/listings/new",(req,res)=>{
+app.get("/listings/new", (req, res) => {
   res.render("./listings/new.ejs");
 });
 
 //edit route
-app.get("/listings/:id/edit", async(req,res)=>{
-  let Id=req.params.id;
-  const listing= await Listing.findById(Id);
-  res.render("./listings/edit.ejs",{listing});
+app.get("/listings/:id/edit", async (req, res) => {
+  let Id = req.params.id;
+  const listing = await Listing.findById(Id);
+  res.render("./listings/edit.ejs", { listing });
 });
 
-//update route 
-app.put("/listings/:id",async (req,res)=>{
-  let Id=req.params.id;
-  await Listing.findByIdAndUpdate(Id,{...req.body.listing});
+//update route
+app.put("/listings/:id", async (req, res) => {
+  let Id = req.params.id;
+  await Listing.findByIdAndUpdate(Id, { ...req.body.listing });
   res.redirect("/listings");
 });
 
 //show route
-app.get("/listings/:id", async (req,res)=>{
-  let Id=req.params.id;
-  const listing= await Listing.findById(Id);
-  res.render("./listings/show.ejs",{listing});
+app.get("/listings/:id", async (req, res) => {
+  let Id = req.params.id;
+  const listing = await Listing.findById(Id);
+  res.render("./listings/show.ejs", { listing });
 });
 
 //DELETE route
-app.delete("/listings/:id", async (req,res)=>{
-  let Id=req.params.id;
+app.delete("/listings/:id", async (req, res) => {
+  let Id = req.params.id;
   await Listing.findByIdAndDelete(Id);
   res.redirect("/listings");
 });
-
-
-
-
 
 // app.get("/testListing", async (req,res)=>{
 //   const listing1= new Listing({
@@ -97,3 +93,4 @@ app.delete("/listings/:id", async (req,res)=>{
 //   res.send("sample listing successfull");
 //   console.log("db works");
 // });
+
