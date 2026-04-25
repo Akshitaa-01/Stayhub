@@ -3,13 +3,15 @@ const app=express();
 const mongoose=require("mongoose");
 const Listing=require("./models/listing.js");
 const path=require("path");
-const methodOverride = require('method-override')
- 
+const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
+
 app.set("views", path.join(__dirname,"views"));
 app.set("view engine","ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.engine('ejs', ejsMate);
 
 let port=8080;
 
@@ -71,7 +73,12 @@ app.get("/listings/:id", async (req,res)=>{
   res.render("./listings/show.ejs",{listing});
 });
 
-
+//DELETE route
+app.delete("/listings/:id", async (req,res)=>{
+  let Id=req.params.id;
+  await Listing.findByIdAndDelete(Id);
+  res.redirect("/listings");
+});
 
 
 
