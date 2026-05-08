@@ -122,3 +122,11 @@ body{
     margin-bottom: 20px;
     gap: 5px;
 }
+
+/* error page */
+.err{
+    margin-top: 20px;
+}
+.err-msg{
+    text-align: center;
+}
