@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const listingSchema = Joi.object({
+module.exports.listingSchema = Joi.object({
   listing: Joi.object({
     title: Joi.string().required().messages({
       "string.empty": "Title is required",
@@ -24,4 +24,14 @@ const listingSchema = Joi.object({
   }).required(),
 });
 
-module.exports = { listingSchema };
+module.exports.reviewSchema = Joi.object({
+  review: Joi.object({
+    rating: Joi.number().required().min(1).max(5).messages({
+      "number.base": "Rating must be a number",
+      "any.required": "Rating is required",
+    }),
+    comment: Joi.string().required().messages({
+      "any.required": "Comment is required",
+    }),
+  }).required(),
+});

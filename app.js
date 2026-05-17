@@ -11,6 +11,7 @@ const Review = require("./models/review.js");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js");
+const { reviewSchema } = require("./schema.js");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -50,6 +51,17 @@ const validateListing = (req, res,next) => {
   }
   next();
 };
+
+//validateReview for server side (middleware)
+const validateReview = (req,res,next)=>{
+  let {error} = reviewSchema.validate(req.body,{ abortEarly: false});
+  if (error){
+    let errMsg = error.details.map((el) => el.message).join(" , ");
+    return next(new ExpressError(400, errMsg));
+  }
+  next();
+}
+
 
 //home route
 app.get("/listings", wrapAsync(async (req, res) => {
@@ -111,7 +123,7 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
  
 //Reviews
 //Post route
-app.post("/listings/:id/reviews",async (req,res)=>{
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async (req,res)=>{
   let Id = req.params.id;
   const listing1 = await Listing.findById(Id);
 
@@ -124,7 +136,7 @@ app.post("/listings/:id/reviews",async (req,res)=>{
   await listing1.save();
 
   res.redirect(`/listings/${Id}`);
-})
+}));
 
 
 
