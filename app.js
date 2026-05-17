@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
   res.send("root is working ");
 });
 
-//validatelisting on server side
+//validatelisting on server side (middleware)
 const validateListing = (req, res,next) => {
   let {error} = listingSchema.validate(req.body,{ abortEarly: false });
   if (error) {
@@ -106,12 +106,14 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
  
+//page not found error 
 app.use((req, res, next) => {
-  next(new ExpressError(404, "page not found!!"));
+  next(new ExpressError(404, "page not found!!"));  //next(err) means send to error handling middleware
 }); 
 
-//error handling 
+//error handling middleware
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!!" } = err;
   res.status(statusCode).render("error.ejs",{message});
 });
+

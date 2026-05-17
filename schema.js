@@ -11,7 +11,7 @@ const listingSchema = Joi.object({
       "any.required": "Description is required",
     }),
     image: Joi.string().allow("", null),
-    price: Joi.number().required().messages({
+    price: Joi.number().required().min(0).messages({
       "number.base": "Price must be a number",
       "any.required": "Price is required",
     }),
