@@ -54,7 +54,7 @@ body{
 }
 
 /* card */
-.card{
+.listing-card{
     border: none;
     margin-bottom: 1rem;
     margin-top: 1rem;
@@ -134,4 +134,13 @@ body{
 }
 .err-msg{
     text-align: center;
+}
+
+/* review-card */
+.review-card{
+    padding: 3px;
+}
+.btn-review-del{
+    background-color: rgb(132, 1, 1);
+    border: none !important;
 }

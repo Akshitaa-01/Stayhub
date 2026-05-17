@@ -109,7 +109,7 @@ app.put(
 //show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
   let Id = req.params.id;
-  const listing = await Listing.findById(Id);
+  const listing = await Listing.findById(Id).populate("reviews");
 
   res.render("./listings/show.ejs", { listing });
 }));
@@ -122,7 +122,7 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
 }));
  
 //Reviews
-//Post route
+//review Post route
 app.post("/listings/:id/reviews",validateReview,wrapAsync(async (req,res)=>{
   let Id = req.params.id;
   const listing1 = await Listing.findById(Id);
@@ -138,9 +138,17 @@ app.post("/listings/:id/reviews",validateReview,wrapAsync(async (req,res)=>{
   res.redirect(`/listings/${Id}`);
 }));
 
+//review delete route
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+  let {id,reviewId} = req.params;
 
+  await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+  await Review.findByIdAndDelete(reviewId);
 
+  res.redirect(`/listings/${id}`);
+}));
 
+//middlewares
 //page not found error 
 app.use((req, res, next) => {
   next(new ExpressError(404, "page not found!!"));  //next(err) means send to error handling middleware
