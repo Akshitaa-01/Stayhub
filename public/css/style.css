@@ -28,8 +28,6 @@ body{
     align-items: center ;
     height: 8rem;
     background-color: rgb(238, 238, 238);
-}
-.f-info{
     width: 100%;
 }
 .f-info-links a {

@@ -1,13 +1,13 @@
 const { string } = require("joi");
 const mongoose = require("mongoose");
-const {Schema} = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
     comment:{
         type:String,
         trim:true
     },
-    range:{
+    rating:{
         type:Number,
         min:1,
         max:5

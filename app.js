@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const Joi = require("joi");
+
+const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const Joi = require("joi");
 const { listingSchema } = require("./schema.js");
 
 app.set("views", path.join(__dirname, "views"));
@@ -34,6 +36,7 @@ app.listen(port, () => {
   console.log("server is working");
 });
 
+//root 
 app.get("/", (req, res) => {
   res.send("root is working ");
 });
@@ -54,7 +57,7 @@ app.get("/listings", wrapAsync(async (req, res) => {
   res.render("./listings/home.ejs", { allListings });
 }));
 
-//create route
+//post route
 app.post(
   "/listings",
   validateListing,
@@ -106,6 +109,26 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
  
+//Reviews
+//Post route
+app.post("/listings/:id/reviews",async (req,res)=>{
+  let Id = req.params.id;
+  const listing1 = await Listing.findById(Id);
+
+  const review = req.body.review;
+  let newReview = new Review(review);
+
+  listing1.reviews.push(newReview);
+
+  await newReview.save();
+  await listing1.save();
+
+  res.redirect(`/listings/${Id}`);
+})
+
+
+
+
 //page not found error 
 app.use((req, res, next) => {
   next(new ExpressError(404, "page not found!!"));  //next(err) means send to error handling middleware
