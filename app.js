@@ -5,7 +5,20 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const Joi = require("joi");
+const  session = require('express-session');
 
+require("dotenv").config();
+
+const sessionOptions={
+  secret:process.env.SESSION_SECRET,
+  resave:false,
+  saveUninitialized: true,
+  cookie:{
+    expires:Date.now() + 7 * 24 *60 *60 *1000,
+    maxAge: 7* 24 *60 *60 *1000,
+    httpOnly:true
+  },
+};
 
 const ExpressError = require("./utils/ExpressError.js")
 const listings = require("./routes/listing.js");
@@ -16,7 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
 
-
+app.use(session(sessionOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
