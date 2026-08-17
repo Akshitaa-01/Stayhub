@@ -14,8 +14,13 @@ router.post("/signup",wrapAsync(async(req,res)=>{
         let {username,email,password}=req.body;
         let newUser= new User({email,username});
         let registeredUser=await User.register(newUser,password);
-        req.flash("success","Welcome to StayHub");
-        res.redirect("/listings");
+        req.login(registeredUser,(err)=>{
+            if (err){
+                return next(err);
+            }
+            req.flash("success","Welcome to StayHub");
+            res.redirect("/listings");
+        })  
     }catch(e){
         req.flash("error",e.message);
         res.redirect("/signup");
