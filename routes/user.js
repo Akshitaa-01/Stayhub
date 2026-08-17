@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport=require("passport");
 
 const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync");
@@ -19,7 +20,19 @@ router.post("/signup",wrapAsync(async(req,res)=>{
         req.flash("error",e.message);
         res.redirect("/signup");
     }
-    
-}) );
+}));
+
+router.get("/login",(req,res)=>{
+    res.render("./users/login.ejs");
+})
+router.post("/login",
+    passport.authenticate("local", {
+        failureRedirect: "/login",
+        failureFlash: true
+    }),
+    (req, res) => {
+        req.flash("success", "Welcome back to Stayhub!");
+        res.redirect("/listings");
+ });
 
 module.exports=router;
