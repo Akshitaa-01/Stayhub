@@ -33,6 +33,14 @@ router.post("/login",
     (req, res) => {
         req.flash("success", "Welcome back to Stayhub!");
         res.redirect("/listings");
- });
-
+});
+router.get("/logout",(req,res,next)=>{
+    req.logout((error)=>{
+        if (error){
+            return next(error);
+        }
+        req.flash("success","You successfully logged out!!");
+        res.redirect("/listings");
+    }
+)})
 module.exports=router;
