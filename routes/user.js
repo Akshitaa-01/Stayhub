@@ -4,6 +4,8 @@ const passport=require("passport");
 
 const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync");
+const {savedRedirectUrl} = require("../middleware.js");
+
 
 router.get("/signup",(req,res)=>{
     res.render("./users/signup.ejs");
@@ -29,16 +31,22 @@ router.post("/signup",wrapAsync(async(req,res)=>{
 
 router.get("/login",(req,res)=>{
     res.render("./users/login.ejs");
-})
-router.post("/login",
+});
+
+router.post(
+    "/login",
+    savedRedirectUrl,
     passport.authenticate("local", {
         failureRedirect: "/login",
         failureFlash: true
     }),
     (req, res) => {
         req.flash("success", "Welcome back to Stayhub!");
-        res.redirect("/listings");
-});
+        let redirectUrl = res.locals.redirectUrl || "/listings";
+        delete req.session.redirectUrl;
+        res.redirect(redirectUrl);
+    }
+);
 router.get("/logout",(req,res,next)=>{
     req.logout((error)=>{
         if (error){
@@ -47,5 +55,7 @@ router.get("/logout",(req,res,next)=>{
         req.flash("success","You successfully logged out!!");
         res.redirect("/listings");
     }
-)})
+)});
+
 module.exports=router;
+// '6a8617923c6598e35a6c89e6'
