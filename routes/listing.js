@@ -1,22 +1,9 @@
 const express = require("express") ;
 const router = express.Router() ;
 const wrapAsync=require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/ExpressError.js");
 
-const { listingSchema } = require("../schema.js");
 const Listing = require("../models/listing.js");
-const { isLoggedIn } = require("../middleware.js");
-
-
-//validatelisting on server side (middleware)
-const validateListing = (req, res,next) => {
-  let {error} = listingSchema.validate(req.body,{ abortEarly: false });
-  if (error) {
-    let errMsg = error.details.map((el) => el.message).join(" , ");
-    return next(new ExpressError(400, errMsg));
-  }
-  next();
-};
+const { isLoggedIn, isOwner ,validateListing} = require("../middleware.js");
 
 //home route
 router.get("/", wrapAsync(async (req, res) => {
@@ -44,7 +31,7 @@ router.get("/new", isLoggedIn,(req, res) => {
 });
 
 //edit route
-router.get("/:id/edit", isLoggedIn,wrapAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn,isOwner,wrapAsync(async (req, res) => {
   let Id = req.params.id;
   const listing = await Listing.findById(Id);
 
@@ -55,6 +42,7 @@ router.get("/:id/edit", isLoggedIn,wrapAsync(async (req, res) => {
 router.put(
   "/:id",
   isLoggedIn,
+  isOwner,
   validateListing,
   wrapAsync(async (req, res) => {
     let Id = req.params.id;
@@ -77,7 +65,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 }));
 
 //DELETE route
-router.delete("/:id",isLoggedIn, wrapAsync(async (req, res) => {
+router.delete("/:id",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
   let Id = req.params.id;
   await Listing.findByIdAndDelete(Id);
   req.flash("success","Listing deleted successfully!!");

@@ -1,3 +1,7 @@
+const Listing = require("./models/listing.js");
+const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
+
 module.exports.isLoggedIn=(req,res,next)=>{
      if (!req.isAuthenticated()){
         req.session.redirectUrl=req.originalUrl;
@@ -12,4 +16,34 @@ module.exports.savedRedirectUrl = (req, res, next) => {
         res.locals.redirectUrl = req.session.redirectUrl;
     }
     next();
+};
+
+module.exports.isOwner=async (req,res,next)=>{
+    let {id} = req.params;
+    let listing=await Listing.findById(id);
+    if (!res.locals.currUser._id.equals(listing.owner._id)){
+        req.flash("error","You don't hv permisssion to make changes");
+        return res.redirect(`/listings/${id}`);
+    }
+    next();
+};
+
+//validatelisting on server side (middleware)
+module.exports.validateListing = (req, res,next) => {
+  let {error} = listingSchema.validate(req.body,{ abortEarly: false });
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(" , ");
+    return next(new ExpressError(400, errMsg));
+  }
+  next();
+};
+
+//validateReview for server side (middleware)
+module.exports.validateReview = (req,res,next)=>{
+  let {error} = reviewSchema.validate(req.body,{ abortEarly: false});
+  if (error){
+    let errMsg = error.details.map((el) => el.message).join(" , ");
+    return next(new ExpressError(400, errMsg));
+  }
+  next();
 };
