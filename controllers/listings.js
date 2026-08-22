@@ -6,8 +6,12 @@ module.exports.home=async (req, res) => {
 };
 
 module.exports.createListing=async (req, res,next) => {
+  let url=req.file.path;
+  let filename=req.file.filename;
   const listing = req.body.listing;
   let listing1 = new Listing(listing);
+  listing1.image.url = url;
+  listing1.image.filename = filename;
   listing1.owner = req.user._id;
   await listing1.save();
   req.flash("success","New Listing successfully created!!");
