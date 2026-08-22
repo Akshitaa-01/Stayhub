@@ -7,9 +7,9 @@ module.exports.reviewPost=async (req,res)=>{
 
   const review = req.body.review;
   let newReview = new Review(review);
-
+  newReview.author=req.user._id;
   listing1.reviews.push(newReview);
-
+  
   await newReview.save();
   await listing1.save();
   req.flash("success","New Review successfully created!!");

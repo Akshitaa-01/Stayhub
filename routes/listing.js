@@ -6,35 +6,31 @@ const Listing = require("../models/listing.js");
 const { isLoggedIn, isOwner ,validateListing} = require("../middleware.js");
 const listingController=require("../controllers/listings.js");
 
-//home route
-router.get("/", wrapAsync(listingController.home));
-
-//post route
-router.post(
-  "/",
-  isLoggedIn,
-  validateListing,
-  wrapAsync(listingController.createListing));
+//home & post route
+router
+  .route("/")
+  .get( wrapAsync(listingController.home))
+  .post(
+    isLoggedIn,
+    validateListing,
+    wrapAsync(listingController.createListing));
 
 //new route
 router.get("/new", isLoggedIn,listingController.createForm);
 
-//edit route
-router.get("/:id/edit", isLoggedIn,isOwner,wrapAsync(listingController.editForm));
-
-//update route
-router.put(
-  "/:id",
+//update & show & delete route
+router
+ .route("/:id")
+ .put(
   isLoggedIn,
   isOwner,
   validateListing,
   wrapAsync(listingController.updateListing),
-);
+ )
+ .get( wrapAsync(listingController.showListing))
+ .delete(isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
 
-//show route
-router.get("/:id", wrapAsync(listingController.showListing));
-
-//DELETE route
-router.delete("/:id",isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
+//edit route
+router.get("/:id/edit", isLoggedIn,isOwner,wrapAsync(listingController.editForm));
 
 module.exports=router;
