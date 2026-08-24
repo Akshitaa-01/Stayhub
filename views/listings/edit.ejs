@@ -18,9 +18,14 @@
                         Please enter a short description.
                     </div>
                 </div>
+                 <div class="mb-3">
+                    Orginal listing image <br>
+                    <image class="edit-Form-image" src="<%= originalImageUrl %>" ></image>
+                    
+                </div>
                 <div class="mb-3">
-                    <label for="image" class="form-label">Image Upload</label>
-                    <input name="listing[image]" type="file" value="<%= listing.image %>"class="form-control" required/>
+                    <label for="image" class="form-label">Upload New Image</label>
+                    <input name="listing[image]" type="file" class="form-control" />
                     <div class="invalid-feedback">
                         Please upload image .
                     </div>

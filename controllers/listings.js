@@ -25,15 +25,27 @@ module.exports.createForm=(req, res) => {
 module.exports.editForm=async (req, res) => {
   let Id = req.params.id;
   const listing = await Listing.findById(Id);
-
-  res.render("./listings/edit.ejs", { listing });
+  if (!listing){
+    req.flash("error","Listing does not exist!");
+    res.redirect("./listings");
+  }
+  let originalImageUrl=listing.image.url;
+  res.render("./listings/edit.ejs", { listing,originalImageUrl });
 };
 
 module.exports.updateListing=async (req, res) => {
   let Id = req.params.id;
-  await Listing.findByIdAndUpdate(Id, { ...req.body.listing });
+  let listing1 = await Listing.findByIdAndUpdate(Id, { ...req.body.listing });
+ 
+  if (req.file){
+    let filename=req.file.filename;
+    let url=req.file.path;
+    listing1.image = {url,filename} ;
+    await listing1.save();
+  }
+  
   req.flash("success"," Listing updated successfully!!");
-  res.redirect("/listings");
+  res.redirect(`/listings/${Id}`);
 };
 
 module.exports.showListing=async (req, res) => {

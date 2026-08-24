@@ -101,7 +101,11 @@ body{
     background-color: rgb(132, 1, 1);
     border: none !important;
 }
-
+.edit-Form-image{
+    height: 25vh;
+    width: 300px !important;
+    border-radius:0.5rem !important ;
+}
 /* show page */
 .btn-show{
     background-color: rgb(132, 1, 1);
