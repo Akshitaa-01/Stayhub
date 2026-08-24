@@ -9,6 +9,7 @@ const  session = require('express-session');
 const  flash = require('connect-flash');
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
+const categories=require("./utils/categories.js");
 
 require("dotenv").config();
 
@@ -70,6 +71,8 @@ async function main() {
 app.listen(port, () => {
   console.log("server is working");
 });
+
+app.locals.categories=categories;
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter );

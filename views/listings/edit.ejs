@@ -36,173 +36,29 @@
 
                         <div class="dropdown-menu w-100 p-3">
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Amazing Pools"
-                                    id="amazingPools"
-                                    <% if (listing.category.includes("Amazing Pools")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="amazingPools">
-                                    Amazing Pools
-                                </label>
-                            </div>
+                            <% categories.forEach(category => { %>
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Mountain View"
-                                    id="mountainView"
-                                    <% if (listing.category.includes("Mountain View")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="mountainView">
-                                    Mountain View
-                                </label>
-                            </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input category-checkbox"
+                                        type="checkbox"
+                                        name="listing[category][]"
+                                        value="<%= category.name %>"
+                                        id="<%= category.name.replace(/\s+/g, '') %>"
+                                        <% if (listing.category.includes(category.name)) { %> checked <% } %>
+                                    >
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Beach nearby"
-                                    id="beachNearby"
-                                    <% if (listing.category.includes("Beach nearby")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="beachNearby">
-                                    Beach nearby
-                                </label>
-                            </div>
+                                    <label
+                                        class="form-check-label"
+                                        for="<%= category.name.replace(/\s+/g, '') %>">
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="BedRoom"
-                                    id="bedRoom"
-                                    <% if (listing.category.includes("BedRoom")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="bedRoom">
-                                    BedRoom
-                                </label>
-                            </div>
+                                        <i class="fa-solid <%= category.icon %>"></i>
+                                        <%= category.name %>
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Castles"
-                                    id="castles"
-                                    <% if (listing.category.includes("Castles")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="castles">
-                                    Castles
-                                </label>
-                            </div>
+                                    </label>
+                                </div>
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Forest Cabin"
-                                    id="forestCabin"
-                                    <% if (listing.category.includes("Forest Cabin")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="forestCabin">
-                                    Forest Cabin
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Snowy Escape"
-                                    id="snowyEscape"
-                                    <% if (listing.category.includes("Snowy Escape")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="snowyEscape">
-                                    Snowy Escape
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Camping Sites"
-                                    id="campingSites"
-                                    <% if (listing.category.includes("Camping Sites")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="campingSites">
-                                    Camping Sites
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Farm Stay"
-                                    id="farmStay"
-                                    <% if (listing.category.includes("Farm Stay")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="farmStay">
-                                    Farm Stay
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Central Hub"
-                                    id="centralHub"
-                                    <% if (listing.category.includes("Central Hub")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="centralHub">
-                                    Central Hub
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Airport Near"
-                                    id="airportNear"
-                                    <% if (listing.category.includes("Airport Near")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="airportNear">
-                                    Airport Near
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input category-checkbox"
-                                    type="checkbox"
-                                    name="listing[category][]"
-                                    value="Gym Included"
-                                    id="gymIncluded"
-                                    <% if (listing.category.includes("Gym Included")) { %> checked <% } %>
-                                >
-                                <label class="form-check-label" for="gymIncluded">
-                                    Gym Included
-                                </label>
-                            </div>
+                            <% }); %>
 
                         </div>
                     </div>
@@ -211,7 +67,6 @@
                         Please select at least one category.
                     </div>
                 </div>
-
                  <div class="mb-3">
                     Orginal listing image <br>
                     <image class="edit-Form-image" src="<%= originalImageUrl %>" ></image>

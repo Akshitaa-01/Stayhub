@@ -1,63 +1,10 @@
 <div class="filters">
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-water-ladder"></i></div>
-      <p>Amazing Pools</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon" ><i class="fa-solid fa-mountain"></i></div>
-      <p>Mountain View</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
-      <p>Beach nearby</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-bed"></i></div>
-      <p>BedRoom</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon" ><i class="fa-solid fa-tree"></i></div>
-      <p>Forest Cabin</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-snowflake"></i></div>
-      <p>Snowy Escape</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-tents"></i></div>
-      <p>Camping Sites</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-cow"></i></div>
-      <p>Farm Stay</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-city"></i></div>
-      <p>Central Hub </p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-plane"></i></div>
-      <p>Airport Near</p>
-    </div>
-
-    <div class="filter">
-      <div class="filter-icon"><i class="fa-solid fa-dumbbell"></i></div>
-      <p>Gym Included</p>
-    </div>
-    
+    <% categories.forEach(category => { %>
+        <a href="/listings?category=<%= encodeURIComponent(category.name) %>" class="filter">
+            <div class="filter-icon">
+                <i class="fa-solid <%= category.icon %>"></i>
+            </div>
+            <p><%= category.name %></p>
+        </a>
+    <% }); %>
 </div>
