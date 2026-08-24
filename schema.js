@@ -21,6 +21,29 @@ module.exports.listingSchema = Joi.object({
     country: Joi.string().required().messages({
       "any.required": "Country is required",
     }),
+    category: Joi.array()
+    .items(
+        Joi.string().valid(
+            "Amazing Pools",
+            "Mountain View",
+            "Beach nearby",
+            "BedRoom",
+            "Castles",
+            "Forest Cabin",
+            "Snowy Escape",
+            "Camping Sites",
+            "Farm Stay",
+            "Central Hub",
+            "Airport Near",
+            "Gym Included"
+        )
+    )
+    .min(1)
+    .required()
+    .messages({
+        "any.required": "Category is required",
+        "array.min": "Please select at least one category"
+    })
   }).required(),
 });
 

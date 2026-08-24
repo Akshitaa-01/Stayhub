@@ -71,11 +71,6 @@ app.listen(port, () => {
   console.log("server is working");
 });
 
-//root 
-app.get("/", (req, res) => {
-  res.send("root is working ");
-});
-
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter );
 app.use("/", userRouter );

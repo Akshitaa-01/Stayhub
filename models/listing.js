@@ -27,6 +27,10 @@ const listingSchema = new Schema({
    owner:{
     type: Schema.Types.ObjectId,
     ref: 'User'
+   },
+   category:{
+    type:[String],
+    enum:["Amazing Pools","Mountain View","Beach nearby","BedRoom","Castles","Forest Cabin","Snowy Escape","Camping Sites","Farm Stay","Cental Hub","Airport Near","Gym Included"]
    }
 });
 
