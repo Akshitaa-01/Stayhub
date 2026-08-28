@@ -5,8 +5,8 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const Joi = require("joi");
-const  session = require('express-session');
-const  flash = require('connect-flash');
+const session = require('express-session');
+const flash = require('connect-flash');
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const categories=require("./utils/categories.js");
@@ -26,7 +26,7 @@ const sessionOptions={
 
 const User =require("./models/user.js");
 
-const ExpressError = require("./utils/ExpressError.js")
+const ExpressError = require("./utils/ExpressError.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter =require("./routes/user.js");

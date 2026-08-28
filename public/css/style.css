@@ -24,7 +24,7 @@ body{
     color: black !important;
 }
 
-
+/* footer */
 .f-info{
     display: flex;
     flex-wrap: wrap ;
@@ -79,6 +79,9 @@ body{
 }
 .listing-link{
     text-decoration: none !important;
+}
+.home-err{
+    text-align: center;
 }
 
 /* overlay-effect */
@@ -186,5 +189,4 @@ footer {
     display:flex;
     flex-wrap: wrap;
     margin-right: 1rem;
-    
 }

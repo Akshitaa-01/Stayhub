@@ -1,8 +1,15 @@
 const Listing = require("../models/listing.js");
 
 module.exports.home=async (req, res) => {
-  const allListings = await Listing.find();
-  res.render("./listings/home.ejs", { allListings });
+  const {category} = req.query;
+  let allListings;
+  if (category){
+    allListings = await Listing.find({category});
+  }else {
+    allListings = await Listing.find();
+  }
+
+  res.render("./listings/home.ejs", { allListings,category });
 };
 
 module.exports.createListing=async (req, res,next) => {
