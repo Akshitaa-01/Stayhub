@@ -32,10 +32,6 @@ const categories = [
         icon: "fa-campground"
     },
     {
-        name: "Farm Stay",
-        icon: "fa-tractor"
-    },
-    {
         name: "Central Hub",
         icon: "fa-calendar-days"
     },

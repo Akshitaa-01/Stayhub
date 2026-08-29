@@ -1,15 +1,23 @@
 const Listing = require("../models/listing.js");
 
 module.exports.home=async (req, res) => {
-  const {category} = req.query;
+  const {search,category} = req.query;
   let allListings;
-  if (category){
-    allListings = await Listing.find({category});
+  if (category ){
+    allListings = await Listing.find({category:category});
+  }else if (search){
+    allListings = await Listing.find({
+      $or: [
+          { location: { $regex: search, $options: "i" } },
+          { country: { $regex: search, $options: "i" } },
+          { title: { $regex: search, $options: "i" } }
+      ]
+        });
   }else {
     allListings = await Listing.find();
   }
 
-  res.render("./listings/home.ejs", { allListings,category });
+  res.render("./listings/home.ejs", { allListings,category,search });
 };
 
 module.exports.createListing=async (req, res,next) => {

@@ -3,10 +3,15 @@
 <body>
     <% if (allListings.length!=0) { %>
         <% if (category) { %>
-                <h3 class="category-title">
-                    <%= category %> Stays 
-                </h3>
-            <% } %>
+            <h3 class="category-title">
+                <%= category %> Stays 
+            </h3>
+        <% } %>
+        <% if (search) { %>
+            <h3 class="category-title">
+                Stays in <%= search.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+            </h3>
+        <% } %>
         <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 justify-content-center">
             <% for( let listing of allListings ) { %>
                 <a href="/listings/<%= listing._id %>" class="listing-link">
@@ -17,18 +22,25 @@
                             <p class="card-text">
                                 <b><%= listing.title%></b><br>
                                 <%= listing.price.toLocaleString('en-IN', {style: 'currency',currency: 'INR'});%>/per night
+                                <i class="tax-info">+18% GST</i>
                             </p>
                         </div>
                     </div>
                 </a>
             <% } %>
      <% } %>         
-    <% if (allListings.length==0) { %>
+    <% if (allListings.length===0) { %>
             <div class="alert alert-danger home-err" role="alert" >
                <p>
                 <b>No stays found here!</b>
                 <br>
-                Try exploring another category to find your perfect stay.
+                <% if (search) { %>
+                    Try searching for another destination to find your perfect stay.
+                <% } else if (category) { %>
+                    Try exploring another category to find your perfect stay.
+                <% } else { %>
+                    Try exploring something else to find your perfect stay.
+                <% } %>
                </p>          
             </div>
     <% } %>       

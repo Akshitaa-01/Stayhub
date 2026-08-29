@@ -30,7 +30,7 @@ const listingSchema = new Schema({
    },
    category:{
     type:[String],
-    enum:["Amazing Pools","Mountain View","Beach nearby","BedRoom","Castles","Forest Cabin","Snowy Escape","Camping Sites","Farm Stay","Cental Hub","Airport Near","Gym Included"]
+    enum:["Amazing Pools","Mountain View","Beach nearby","BedRoom","Castles","Forest Cabin","Snowy Escape","Camping Sites","Cental Hub","Airport Near","Gym Included"]
    }
 });
 
