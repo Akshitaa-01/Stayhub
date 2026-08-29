@@ -21,7 +21,7 @@ module.exports.createListing=async (req, res,next) => {
   listing1.image.filename = filename;
   listing1.owner = req.user._id;
   await listing1.save();
-  req.flash("success","New Listing successfully created!!");
+  req.flash("success","New stay successfully created!!");
   res.redirect("./listings");
 };
 
@@ -33,7 +33,7 @@ module.exports.editForm=async (req, res) => {
   let Id = req.params.id;
   const listing = await Listing.findById(Id);
   if (!listing){
-    req.flash("error","Listing does not exist!");
+    req.flash("error","Stay does not exist!");
     res.redirect("./listings");
   }
   let originalImageUrl=listing.image.url;
@@ -51,7 +51,7 @@ module.exports.updateListing=async (req, res) => {
     await listing1.save();
   }
   
-  req.flash("success"," Listing updated successfully!!");
+  req.flash("success","Stay updated successfully!!");
   res.redirect(`/listings/${Id}`);
 };
 
@@ -62,7 +62,7 @@ module.exports.showListing=async (req, res) => {
     populate:"author",
   }).populate("owner");
   if (!listing){
-    req.flash("error"," Listing you requested for does not exist!!");
+    req.flash("error"," Stay you requested for does not exist!!");
     res.redirect("/listings");
   }else {
     res.render("./listings/show.ejs", { listing });
@@ -72,6 +72,6 @@ module.exports.showListing=async (req, res) => {
 module.exports.destroyListing=async (req, res) => {
   let Id = req.params.id;
   await Listing.findByIdAndDelete(Id);
-  req.flash("success","Listing deleted successfully!!");
+  req.flash("success","Stay deleted successfully!!");
   res.redirect("/listings");
 }

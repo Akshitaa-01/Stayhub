@@ -5,8 +5,12 @@ const Review = require("./models/review.js");
 
 module.exports.isLoggedIn=(req,res,next)=>{
      if (!req.isAuthenticated()){
-        req.session.redirectUrl=req.originalUrl;
-        req.flash("error","You must be logged in to make changes in Listing!");
+        if (req.method === "POST" && req.baseUrl.endsWith("/reviews")) {
+            req.session.redirectUrl = `/listings/${req.params.id}`;
+        } else {
+            req.session.redirectUrl = req.originalUrl;
+        }
+        req.flash("error","You must be logged in to make changes in stay!");
         return res.redirect("/login");
     }
     next();
