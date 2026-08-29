@@ -2,25 +2,37 @@
 <body>
     <div class="row">
         <div class="col-8 offset-2 ">
-            <br>
-            <h3><%= listing.title %></h3>
+            <h1 class="listing-title"><%= listing.title %></h1>
             <div class="card listing-card">
-                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image" >
+                <img src="<%= listing.image.url %>"
+                    class="card-img-top show-img"
+                    alt="listing_image">
                 <div class="card-body">
-                    <br>
-                    <div class="card-text">
-                        <p class="listing-owner">
-                            <span>Owned by</span> <%= listing.owner.username %>
+                    <div class="listing-info">
+                        <p class="listing-owner ">
+                            Hosted by <strong><%= listing.owner.username %></strong>
                         </p>
-                        <%= listing.description %>
-                        <ul>
-                            <li><%= listing.price.toLocaleString('en-IN', {style: 'currency',currency: 'INR'});%> &nbsp; <i>+18% GST</i></li>
-                            <li><%= listing.location %></li>
-                            <li><%= listing.country %></li>
-                        </ul>
+                        <p class="listing-description">
+                            <%= listing.description %>
+                        </p>
+                        <div class="listing-meta">
+                            <span>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <%= listing.location %>, <%= listing.country %>
+                            </span>
+                            <span class="listing-price">
+                                <%= listing.price.toLocaleString('en-IN', {
+                                    style: 'currency',
+                                    currency: 'INR'
+                                }) %>
+                                <small>/ night</small>
+                            </span>
+                        </div>
+
                     </div>
                 </div>
-            
+            </div>
+    
         </div> 
         <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
             <div class="card-btns">
