@@ -43,7 +43,7 @@ The application is deployed using Render, with MongoDB Atlas for the production 
 | Category | Technologies |
 |---|---|
 | Frontend | HTML, CSS, JavaScript, Bootstrap, EJS |
-| Backend | Node.js, Express.js |
+| Backend | Node.js, Express.js, Joi|
 | Database | MongoDB, Mongoose, MongoDB Atlas |
 | Authentication | Passport.js |
 | Sessions | Express Session, Connect-Mongo |
@@ -54,6 +54,7 @@ The application is deployed using Render, with MongoDB Atlas for the production 
 
 - Follows an MVC architecture with separate models, controllers, routes, and views
 - Implements authentication and authorization using Passport.js and Express Session
+- Uses Joi for server-side request validation
 - Integrates Cloudinary for property image uploads and MongoDB Atlas for cloud data storage
 - Persists user sessions with Connect-Mongo and handles protected user actions
 
