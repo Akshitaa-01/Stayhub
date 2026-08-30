@@ -11,7 +11,7 @@ const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const MongoStore = require('connect-mongo').default;
 
-require("dotenv").config();
+require("dotenv").config({ override: true });
 
 const port = 8080;
 const dburl=process.env.ATLASDB_URL;

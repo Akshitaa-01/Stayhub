@@ -1,6 +1,6 @@
 {
-  "engines":{
-    "version":"24.14.0"
+  "engines": {
+    "version": "24.14.0"
   },
   "name": "stayhub",
   "version": "1.0.0",
@@ -14,7 +14,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "cloudinary": "^2.10.1",
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^6.0.0",
     "dotenv": "^17.4.2",
