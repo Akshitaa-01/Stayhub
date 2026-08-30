@@ -1,4 +1,7 @@
 {
+  "engines":{
+    "version":"24.14.0"
+  },
   "name": "stayhub",
   "version": "1.0.0",
   "description": "",
@@ -13,6 +16,7 @@
   "dependencies": {
     "cloudinary": "^2.10.1",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^5.0.2",
     "ejs-mate": "^4.0.0",

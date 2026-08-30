@@ -54,6 +54,7 @@ module.exports.reviewSchema = Joi.object({
       "any.required": "Rating is required",
     }),
     comment: Joi.string().required().messages({
+      "string.empty": "Comment is required",
       "any.required": "Comment is required",
     }),
   }).required(),

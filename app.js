@@ -9,11 +9,27 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
-const categories=require("./utils/categories.js");
+const MongoStore = require('connect-mongo').default;
 
 require("dotenv").config();
 
+const port = 8080;
+const dburl=process.env.ATLASDB_URL;
+
+const store=MongoStore.create({
+  mongoUrl:dburl,
+  crypto:{
+    secret:process.env.SESSION_SECRET
+  },
+  touchAfter:24*60*60 ,
+});
+
+store.on("error",()=>{
+  console.log("ERROR IN MONGO SESSION STORE",err);
+});
+
 const sessionOptions={
+  store:store,
   secret:process.env.SESSION_SECRET,
   resave:false,
   saveUninitialized: true,
@@ -26,7 +42,9 @@ const sessionOptions={
 
 const User =require("./models/user.js");
 
+const categories=require("./utils/categories.js");
 const ExpressError = require("./utils/ExpressError.js");
+
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter =require("./routes/user.js");
@@ -53,10 +71,9 @@ app.use((req, res, next) => {
   res.locals.success=req.flash("success");
   res.locals.error=req.flash("error");
   res.locals.currUser=req.user;
+  res.locals.categories=categories;
   next();
 });
-
-let port = 8080;
 
 main()
   .then((res) => {
@@ -65,14 +82,12 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/stayhub");
+  await mongoose.connect(dburl);
 }
 
 app.listen(port, () => {
   console.log("server is working");
 });
-
-app.locals.categories=categories;
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter );
